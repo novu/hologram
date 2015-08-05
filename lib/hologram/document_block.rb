@@ -55,16 +55,19 @@ module Hologram
     def markdown_with_heading(heading = 1, opts={})
       include_sub_nav = opts[:include_sub_nav] || false
 
-      output = "\n\n<h#{heading.to_s} id=\"#{@name}\" class=\"#{css_class_name}\">#{@title}</h#{heading.to_s}>"
+      output = "<div class=\"novu-box-wrapper #{@title}\">"
+      output += "<div class=\"title one-line\">"
+      output += "<h#{heading.to_s} id=\"#{@name}\" class=\"#{css_class_name}\">#{@title}</h#{heading.to_s}>"
+      output += "</div>"
+
       if include_sub_nav && !children.empty?
-        output += "\n<ul class=\"section-nav\">"
+        output += "<ul class=\"section-nav\">"
         children.values.each do |child|
-          output += "\n  <li><a href=\"\##{child.name}\">#{child.title}</a></li>"
+          output += "<li><a href=\"\##{child.name}\">#{child.title}</a></li>"
         end
-        output += "\n</ul>\n"
+        output += "</ul>"
       end
-      output += @markdown
-      output
+      output += @markdown + "</div><br />"
     end
 
     private
